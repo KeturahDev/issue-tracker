@@ -19,6 +19,10 @@ Issue tracker! A next.js project meant to put the lessons learned from an earlie
 - pagination
 - dashboard
 
+## Aspirational To Dos
+
+- make logo wiggle on hover
+
 <details>
 <summary>Specs</summary>
 
