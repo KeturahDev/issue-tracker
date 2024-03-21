@@ -1,8 +1,12 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { BsBug } from "react-icons/bs";
+import classNames from "classnames";
 
 const Navbar = () => {
+  const currentPath = usePathname();
   const links = [
     { name: "Dashboard", href: "/" },
     { name: "Issues", href: "/issues" },
@@ -17,7 +21,11 @@ const Navbar = () => {
           return (
             <li key={link.href}>
               <Link
-                className="text-green-600 hover:text-green-800 transition-colors"
+                className={classNames({
+                  "text-green-600": link.href !== currentPath,
+                  "text-green-700": link.href === currentPath,
+                  "hover:text-green-800 transition-colors": true,
+                })}
                 href={link.href}
               >
                 {link.name}
