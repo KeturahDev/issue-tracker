@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Theme>
           <Navbar />
-          <main>{children}</main>
+          <main className="flex min-h-screen flex-col mx-5">{children}</main>
         </Theme>
       </body>
     </html>
