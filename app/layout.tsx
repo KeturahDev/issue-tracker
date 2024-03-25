@@ -5,7 +5,10 @@ import Navbar from "./Navbar";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "Issue Tracker",
@@ -19,8 +22,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Theme>
+      <body className={inter.variable}>
+        <Theme
+          appearance="light"
+          accentColor="sky"
+          grayColor="sage"
+          radius="large"
+          scaling="110%"
+        >
           <Navbar />
           <main className="flex min-h-screen flex-col mx-5">{children}</main>
         </Theme>
