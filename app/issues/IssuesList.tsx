@@ -1,30 +1,38 @@
-import axios from "axios";
-import React from "react";
-import { createIssueSchema } from "../validationSchemas";
-import { z } from "zod";
-
-type Issue = z.infer<typeof createIssueSchema>;
+import { Table } from "@radix-ui/themes";
+import prisma from "@/prisma/client";
 
 const IssuesList = async () => {
-  const response = await fetch("http://localhost:3000/api/issues", {
-    method: "GET",
-    next: { revalidate: 1000, tags: ["issues"] },
-  });
-  const issues = await response.json();
-  console.log();
+  const issues = await prisma.issue.findMany();
   return (
-    <>
-      <h2>Issues:</h2>
-      <ul>
-        {issues.map((is: Issue) => {
+    <Table.Root variant="surface">
+      <Table.Header>
+        <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
+        <Table.ColumnHeaderCell className="hidden md:table-cell">
+          Status
+        </Table.ColumnHeaderCell>
+        <Table.ColumnHeaderCell className="hidden md:table-cell">
+          Created at
+        </Table.ColumnHeaderCell>
+      </Table.Header>
+      <Table.Body>
+        {issues.map((is: any) => {
           return (
-            <li>
-              {is.title} {is.description}
-            </li>
+            <Table.Row>
+              <Table.RowHeaderCell>
+                {is.title}
+                <div className="block md:hidden">{is.status}</div>
+              </Table.RowHeaderCell>
+              <Table.Cell className="hidden md:table-cell">
+                {is.status}
+              </Table.Cell>
+              <Table.Cell className="hidden md:table-cell">
+                {is.createdAt.toDateString()}
+              </Table.Cell>
+            </Table.Row>
           );
         })}
-      </ul>
-    </>
+      </Table.Body>
+    </Table.Root>
   );
 };
 

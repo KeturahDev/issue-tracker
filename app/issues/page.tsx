@@ -5,7 +5,7 @@ import IssuesList from "./IssuesList";
 
 const IssuesPage = () => {
   return (
-    <div>
+    <div className="space-y-5">
       <Button>
         <Link href="/issues/new">New Issue</Link>
       </Button>
