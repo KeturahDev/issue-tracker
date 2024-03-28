@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@radix-ui/themes";
 import Link from "next/link";
+import IssuesList from "./IssuesList";
 
 const IssuesPage = () => {
   return (
@@ -8,6 +9,7 @@ const IssuesPage = () => {
       <Button>
         <Link href="/issues/new">New Issue</Link>
       </Button>
+      <IssuesList />
     </div>
   );
 };
