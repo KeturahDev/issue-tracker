@@ -1,6 +1,5 @@
-import React from "react";
-import IssuesList from "./IssuesList";
 import IssueActions from "./IssueActions";
+import IssuesList from "./IssuesList";
 
 const IssuesPage = () => {
   return (

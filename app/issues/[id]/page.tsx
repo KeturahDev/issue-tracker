@@ -1,4 +1,4 @@
-import Badge from "@/app/components/Badge";
+import { Badge } from "@/app/components";
 import prisma from "@/prisma/client";
 import { Card, Heading, Text } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
