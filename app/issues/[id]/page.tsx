@@ -4,6 +4,7 @@ import React from "react";
 import delay from "delay";
 import { Card, Heading, Text } from "@radix-ui/themes";
 import Badge from "@/app/components/Badge";
+import ReactMarkdown from "react-markdown";
 
 interface Props {
   params: { id: string };
@@ -22,8 +23,8 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
         <Badge status={issue.status} />
         <Text size="2">{issue.createdAt.toDateString()}</Text>
       </div>
-      <Card>
-        <p>{issue.description}</p>
+      <Card className="prose">
+        <ReactMarkdown>{issue.description}</ReactMarkdown>
       </Card>
     </div>
   );
