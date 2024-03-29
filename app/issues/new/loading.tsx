@@ -5,8 +5,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 const LoadingNewIssue = () => {
   return (
-    <Box className="space-y-3 max-w-xl">
-      <Skeleton />
+    <Box className="max-w-xl">
+      <Skeleton className="mb-3" height="2rem" />
       <Skeleton height="20rem" />
     </Box>
   );
