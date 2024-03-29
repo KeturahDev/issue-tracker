@@ -1,5 +1,6 @@
 import { Table } from "@radix-ui/themes";
 import prisma from "@/prisma/client";
+import Badge from "../components/Badge";
 
 const IssuesList = async () => {
   const issues = await prisma.issue.findMany();
@@ -15,15 +16,17 @@ const IssuesList = async () => {
         </Table.ColumnHeaderCell>
       </Table.Header>
       <Table.Body>
-        {issues.map((is: any) => {
+        {issues.map((is) => {
           return (
             <Table.Row>
               <Table.RowHeaderCell>
                 {is.title}
-                <div className="block md:hidden">{is.status}</div>
+                <div className="block md:hidden">
+                  <Badge status={is.status} />
+                </div>
               </Table.RowHeaderCell>
               <Table.Cell className="hidden md:table-cell">
-                {is.status}
+                <Badge status={is.status} />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 {is.createdAt.toDateString()}
