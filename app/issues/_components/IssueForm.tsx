@@ -6,7 +6,7 @@ import { LuAlertCircle } from "react-icons/lu";
 import ErrorMessage from "../../components/ErrorMessage";
 import Spinner from "../../components/Spinner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createIssueSchema } from "../../validationSchemas";
+import { issueSchema } from "../../validationSchemas";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { z } from "zod";
@@ -14,7 +14,7 @@ import { Issue } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-export type IssueFormData = z.infer<typeof createIssueSchema>;
+export type IssueFormData = z.infer<typeof issueSchema>;
 
 const IssueForm = ({
   // onFormSuccess,
@@ -31,7 +31,7 @@ const IssueForm = ({
     handleSubmit,
     formState: { errors },
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(issueSchema),
   });
   const [error, setError] = useState("");
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
