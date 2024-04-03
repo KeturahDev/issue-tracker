@@ -1,7 +1,6 @@
-import IssueForm, { IssueFormData } from "@/app/issues/_components/IssueForm";
+import IssueForm from "@/app/issues/_components/IssueForm";
 import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
-import React from "react";
 
 interface Props {
   params: { id: string };
@@ -14,10 +13,7 @@ const EditIssuePage = async ({ params: { id } }: Props) => {
   if (!issue) notFound();
   return (
     <div>
-      <IssueForm
-        issue={issue}
-        // onFormSuccess={(data: IssueFormData) => console.log(data)}
-      />
+      <IssueForm issue={issue} />
     </div>
   );
 };

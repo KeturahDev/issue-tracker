@@ -16,13 +16,7 @@ import { useRouter } from "next/navigation";
 
 export type IssueFormData = z.infer<typeof issueSchema>;
 
-const IssueForm = ({
-  // onFormSuccess,
-  issue,
-}: {
-  // onFormSuccess: (data: IssueFormData) => void;
-  issue?: Issue;
-}) => {
+const IssueForm = ({ issue }: { issue?: Issue }) => {
   const router = useRouter();
 
   const {
@@ -38,15 +32,17 @@ const IssueForm = ({
   const onSubmit = handleSubmit(async (data) => {
     try {
       setSubmitting(true);
-      // onFormSuccess(data);
-      await axios.post("/api/issues", data);
+      if (issue) {
+        await axios.patch(`/api/issues/${issue.id}`, data);
+      } else {
+        await axios.post("/api/issues", data);
+      }
       router.push("/issues");
     } catch (error) {
       setSubmitting(false);
       setError("An unexpected error occured.");
     }
   });
-  console.log(issue);
   return (
     <div className="max-w-xl">
       {error ? (
