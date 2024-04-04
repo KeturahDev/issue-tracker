@@ -1,12 +1,10 @@
 import { Table } from "@radix-ui/themes";
 import { Skeleton } from "@/app/components";
-import IssueActions from "./IssueActions";
 
-const LoadingIssuesPage = () => {
+const IssuesListSkeleton = () => {
   const issues = [1, 2, 3, 4, 5];
   return (
     <div className="space-y-5">
-      <IssueActions />
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
@@ -42,4 +40,4 @@ const LoadingIssuesPage = () => {
   );
 };
 
-export default LoadingIssuesPage;
+export default IssuesListSkeleton;

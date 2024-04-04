@@ -1,11 +1,15 @@
+import { Suspense } from "react";
 import IssueActions from "./IssueActions";
 import IssuesList from "./IssuesList";
+import IssuesListSkeleton from "./IssuesListSkeleton";
 
 const IssuesPage = () => {
   return (
     <div className="space-y-5">
       <IssueActions />
-      <IssuesList />
+      <Suspense fallback={<IssuesListSkeleton />}>
+        <IssuesList />
+      </Suspense>
     </div>
   );
 };
