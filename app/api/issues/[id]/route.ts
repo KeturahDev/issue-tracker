@@ -44,5 +44,5 @@ export async function DELETE(
     where: { id: issue.id },
   });
 
-  return NextResponse.json(issue);
+  return NextResponse.json({});
 }
