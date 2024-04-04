@@ -5,12 +5,10 @@ import { FaRegEdit } from "react-icons/fa";
 
 const EditIssueButton = ({ issueId }: { issueId: number }) => {
   return (
-    <Box>
-      <Button>
-        <FaRegEdit />
-        <Link href={`/issues/${issueId}/edit`}>Edit Issue</Link>
-      </Button>
-    </Box>
+    <Button>
+      <FaRegEdit />
+      <Link href={`/issues/${issueId}/edit`}>Edit Issue</Link>
+    </Button>
   );
 };
 

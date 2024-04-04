@@ -11,7 +11,7 @@ const IssueDetails = async ({ issue }: { issue: Issue }) => {
         <Badge status={issue.status} />
         <Text size="2">{issue.createdAt.toDateString()}</Text>
       </div>
-      <Card className="prose">
+      <Card className="prose max-w-full">
         <ReactMarkdown>{issue.description}</ReactMarkdown>
       </Card>
     </Box>
