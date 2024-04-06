@@ -42,3 +42,5 @@ Issue tracker! A next.js project meant to put the lessons learned from an earlie
 - Typescript
 - Tailwind
 - Prisma
+- Next Auth
+- React Query
