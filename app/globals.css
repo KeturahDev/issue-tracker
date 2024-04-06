@@ -15,3 +15,9 @@ body {
 .radix-themes {
   --default-font-family: var(--font-inter);
 }
+
+@layer utilities {
+  .nav-link {
+    @apply text-green-600 hover:text-green-800 transition-colors;
+  }
+}
