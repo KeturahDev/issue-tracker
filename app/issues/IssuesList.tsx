@@ -1,28 +1,57 @@
 import prisma from "@/prisma/client";
-import { Status } from "@prisma/client";
-import { Table } from "@radix-ui/themes";
+import { Issue, Status } from "@prisma/client";
+import { Flex, Table } from "@radix-ui/themes";
+import classNames from "classnames";
+import NextLink from "next/link";
+import { BsArrowUp } from "react-icons/bs";
 import { Badge, Link } from "../components";
 
-const IssuesList = async ({ status }: { status: Status }) => {
+const IssuesList = async ({
+  searchParams,
+}: {
+  searchParams: { status: Status; orderBy: keyof Issue };
+}) => {
+  const columns: { label: string; value: keyof Issue }[] = [
+    { label: "Issue", value: "title" },
+    { label: "Status", value: "status" },
+    { label: "Created At", value: "createdAt" },
+  ];
+
   const statuses = Object.values(Status);
-  const issues = await prisma.issue.findMany(
-    statuses.includes(status)
-      ? {
-          where: { status: status },
-        }
-      : undefined
-  );
+  const status = statuses.includes(searchParams.status)
+    ? searchParams.status
+    : undefined;
+  // const filter = searchParams.orderBy === keyof;
+  const issues = await prisma.issue.findMany({
+    where: { status },
+    // filter: {},
+  });
+
   return (
     <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell className="hidden md:table-cell">
-            Status
-          </Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell className="hidden md:table-cell">
-            Created at
-          </Table.ColumnHeaderCell>
+          {columns.map((column, i) => {
+            return (
+              <Table.ColumnHeaderCell
+                key={i}
+                className={classNames({
+                  "hidden md:table-cell": i > 0,
+                })}
+              >
+                <NextLink
+                  href={{
+                    query: { ...searchParams, orderBy: column.value },
+                  }}
+                >
+                  <Flex align="center">
+                    {column.label}
+                    {column.value === searchParams.orderBy && <BsArrowUp />}
+                  </Flex>
+                </NextLink>
+              </Table.ColumnHeaderCell>
+            );
+          })}
         </Table.Row>
       </Table.Header>
       <Table.Body>
