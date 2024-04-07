@@ -1,9 +1,17 @@
 import prisma from "@/prisma/client";
+import { Status } from "@prisma/client";
 import { Table } from "@radix-ui/themes";
 import { Badge, Link } from "../components";
 
-const IssuesList = async () => {
-  const issues = await prisma.issue.findMany();
+const IssuesList = async ({ status }: { status: Status }) => {
+  const statuses = Object.values(Status);
+  const issues = await prisma.issue.findMany(
+    statuses.includes(status)
+      ? {
+          where: { status: status },
+        }
+      : undefined
+  );
   return (
     <Table.Root variant="surface">
       <Table.Header>
