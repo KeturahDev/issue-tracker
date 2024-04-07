@@ -21,10 +21,12 @@ const IssuesList = async ({
   const status = statuses.includes(searchParams.status)
     ? searchParams.status
     : undefined;
-  // const filter = searchParams.orderBy === keyof;
+  const orderBy = columns.map((col) => col.value).includes(searchParams.orderBy)
+    ? { [searchParams.orderBy]: "asc" }
+    : undefined;
   const issues = await prisma.issue.findMany({
     where: { status },
-    // filter: {},
+    orderBy,
   });
 
   return (
