@@ -1,9 +1,10 @@
 "use client";
-import { Flex } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import classNames from "classnames";
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 
 interface Props {
   itemCount: number;
@@ -13,16 +14,29 @@ interface Props {
 
 const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const params = new URLSearchParams();
+  if (searchParams.get("status"))
+    params.append("status", searchParams.get("status")!);
+  if (searchParams.get("orderBy"))
+    params.append("orderBy", searchParams.get("orderBy")!);
+
+  const getHref = (p: number | "forward" | "back") => {
+    let pageValue;
+    if (p === "forward") pageValue = currentPage + 1;
+    if (p === "back") pageValue = currentPage - 1;
+
+    return `/issues${
+      params
+        ? "?" + params.toString() + `&page=${pageValue || p}`
+        : `?page=${pageValue || p}`
+    }`;
+  };
+
   const pageCount: number = Math.ceil(itemCount / pageSize);
   let pages = [];
 
   for (let p = 1; p <= pageCount; p++) {
-    const params = new URLSearchParams();
-    if (searchParams.get("status"))
-      params.append("status", searchParams.get("status")!);
-    if (searchParams.get("orderBy"))
-      params.append("orderBy", searchParams.get("orderBy")!);
-
     pages.push(
       <div
         key={p}
@@ -30,22 +44,32 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
           "font-bold": p === currentPage,
         })}
       >
-        <Link
-          href={`/issues${
-            params ? "?" + params.toString() + `&page=${p}` : `?page=${p}`
-          }`}
-        >
-          {p}
-        </Link>
+        <Link href={getHref(p)}>{p}</Link>
       </div>
     );
   }
 
   return (
-    <Flex gap="3">
-      <div>Back</div>
+    <Flex align="center" gap="3">
+      <div>
+        <Button
+          variant="soft"
+          disabled={currentPage === 1}
+          onClick={() => router.push(getHref("back"))}
+        >
+          <RxCaretLeft />
+        </Button>
+      </div>
       {pages.map((page) => page)}
-      <div>Forward</div>
+      <div>
+        <Button
+          variant="soft"
+          disabled={currentPage === pages.length}
+          onClick={() => router.push(getHref("forward"))}
+        >
+          <RxCaretRight />
+        </Button>
+      </div>
     </Flex>
   );
 };
