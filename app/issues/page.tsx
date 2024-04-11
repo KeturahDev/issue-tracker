@@ -3,11 +3,12 @@ import { Suspense } from "react";
 import IssueActions from "./IssueActions";
 import IssuesList from "./IssuesList";
 import IssuesListSkeleton from "./IssuesListSkeleton";
+import PagePagination from "./PagePagination";
 
 const IssuesPage = ({
   searchParams,
 }: {
-  searchParams: { status: Status; orderBy: keyof Issue };
+  searchParams: { status: Status; orderBy: keyof Issue; page: string };
 }) => {
   return (
     <div className="space-y-5">
@@ -15,6 +16,7 @@ const IssuesPage = ({
       <Suspense fallback={<IssuesListSkeleton />}>
         <IssuesList searchParams={searchParams} />
       </Suspense>
+      <PagePagination page={parseInt(searchParams.page)} />
     </div>
   );
 };
