@@ -1,6 +1,9 @@
+"use client";
 import { Flex } from "@radix-ui/themes";
 import classNames from "classnames";
 import React from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 interface Props {
   itemCount: number;
@@ -9,10 +12,17 @@ interface Props {
 }
 
 const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
+  const searchParams = useSearchParams();
   const pageCount: number = Math.ceil(itemCount / pageSize);
   let pages = [];
 
-  for (let p = 0; p < pageCount; p++) {
+  for (let p = 1; p <= pageCount; p++) {
+    const params = new URLSearchParams();
+    if (searchParams.get("status"))
+      params.append("status", searchParams.get("status")!);
+    if (searchParams.get("orderBy"))
+      params.append("orderBy", searchParams.get("orderBy")!);
+
     pages.push(
       <div
         key={p}
@@ -20,7 +30,13 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
           "font-bold": p === currentPage,
         })}
       >
-        {p}
+        <Link
+          href={`/issues${
+            params ? "?" + params.toString() + `&page=${p}` : `?page=${p}`
+          }`}
+        >
+          {p}
+        </Link>
       </div>
     );
   }

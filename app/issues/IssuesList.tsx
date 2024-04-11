@@ -1,4 +1,3 @@
-import prisma from "@/prisma/client";
 import { Issue, Status } from "@prisma/client";
 import { Flex, Table } from "@radix-ui/themes";
 import classNames from "classnames";
@@ -7,28 +6,14 @@ import { BsArrowUp } from "react-icons/bs";
 import { Badge, Link } from "../components";
 
 const IssuesList = async ({
+  issues,
+  columns,
   searchParams,
 }: {
+  issues: Issue[];
+  columns: { label: string; value: string }[];
   searchParams: { status: Status; orderBy: keyof Issue };
 }) => {
-  const columns: { label: string; value: keyof Issue }[] = [
-    { label: "Issue", value: "title" },
-    { label: "Status", value: "status" },
-    { label: "Created At", value: "createdAt" },
-  ];
-
-  const statuses = Object.values(Status);
-  const status = statuses.includes(searchParams.status)
-    ? searchParams.status
-    : undefined;
-  const orderBy = columns.map((col) => col.value).includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: "asc" }
-    : undefined;
-  const issues = await prisma.issue.findMany({
-    where: { status },
-    orderBy,
-  });
-
   return (
     <Table.Root variant="surface">
       <Table.Header>
