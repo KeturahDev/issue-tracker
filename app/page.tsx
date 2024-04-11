@@ -1,7 +1,13 @@
+import LatestIssues from "./LatestIssues";
+
 export default function Home() {
   return (
-    <div className="flex">
-      <h1>Hello World</h1>
-    </div>
+    <>
+      <LatestIssues />
+    </>
   );
 }
+
+// IssueSummary
+// BarChart
+// LatestIssues
