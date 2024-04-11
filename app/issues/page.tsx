@@ -1,57 +1,46 @@
-import { Issue, Status } from "@prisma/client";
+import { Status } from "@prisma/client";
 import { Suspense } from "react";
 import IssueActions from "./IssueActions";
-import IssuesList from "./IssuesList";
+import IssuesList, { IssueQuery } from "./IssuesList";
 import IssuesListSkeleton from "./IssuesListSkeleton";
 import Pagination from "../components/Pagination";
 import prisma from "@/prisma/client";
+import { columnNames } from "./IssuesList";
 
-const IssuesPage = async ({
-  searchParams,
-}: {
-  searchParams: { status: Status; orderBy: keyof Issue; page: string };
-}) => {
-  const columns: { label: string; value: keyof Issue }[] = [
-    { label: "Issue", value: "title" },
-    { label: "Status", value: "status" },
-    { label: "Created At", value: "createdAt" },
-  ];
-
+const IssuesPage = async ({ searchParams }: { searchParams: IssueQuery }) => {
   const statuses = Object.values(Status);
   const status = statuses.includes(searchParams.status)
     ? searchParams.status
     : undefined;
-  const orderBy = columns.map((col) => col.value).includes(searchParams.orderBy)
+  const orderBy = columnNames.includes(searchParams.orderBy)
     ? { [searchParams.orderBy]: "asc" }
     : undefined;
   const currentPage = parseInt(searchParams.page)
     ? parseInt(searchParams.page)
     : 1;
+  const where = { status };
+  const pageSize = 7;
 
   const issues = await prisma.issue.findMany({
-    where: { status },
+    where,
     orderBy,
   });
   const paginatedIssues = await prisma.issue.findMany({
-    where: { status },
+    where,
     orderBy,
-    take: 7,
-    skip: currentPage * 7 - 7,
+    take: pageSize,
+    skip: currentPage * pageSize - pageSize,
   });
 
   return (
     <div className="space-y-5">
       <IssueActions />
       <Suspense fallback={<IssuesListSkeleton />}>
-        <IssuesList
-          issues={paginatedIssues}
-          columns={columns}
-          searchParams={searchParams}
-        />
+        <IssuesList issues={paginatedIssues} searchParams={searchParams} />
       </Suspense>
       <Pagination
         itemCount={issues.length}
-        pageSize={7}
+        pageSize={pageSize}
         currentPage={currentPage || 1}
       />
     </div>

@@ -5,14 +5,24 @@ import NextLink from "next/link";
 import { BsArrowUp } from "react-icons/bs";
 import { Badge, Link } from "../components";
 
+export interface IssueQuery {
+  status: Status;
+  orderBy: keyof Issue;
+  page: string;
+}
+
+const columns: { label: string; value: keyof Issue }[] = [
+  { label: "Issue", value: "title" },
+  { label: "Status", value: "status" },
+  { label: "Created At", value: "createdAt" },
+];
+
 const IssuesList = async ({
   issues,
-  columns,
   searchParams,
 }: {
   issues: Issue[];
-  columns: { label: string; value: string }[];
-  searchParams: { status: Status; orderBy: keyof Issue };
+  searchParams: IssueQuery;
 }) => {
   return (
     <Table.Root variant="surface">
@@ -64,5 +74,7 @@ const IssuesList = async ({
     </Table.Root>
   );
 };
+
+export const columnNames = columns.map((col) => col.value);
 
 export default IssuesList;
