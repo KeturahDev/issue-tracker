@@ -7,6 +7,7 @@ import AssigneeSelect from "./AssigneeSelect";
 import DeleteIssueButton from "./DeleteIssueButton";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
+import { Metadata } from "next";
 
 interface Props {
   params: { id: string };
@@ -38,3 +39,14 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
 };
 
 export default IssueDetailsPage;
+
+export async function generateMetadata({ params: { id } }: Props) {
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(id) },
+  });
+  return {
+    title: `"${issue?.title}" Issue`,
+    description: `Details of issue ${issue?.id}`,
+  };
+}
+//add open graph and twitter properties

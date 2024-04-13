@@ -6,6 +6,7 @@ import IssuesListSkeleton from "./IssuesListSkeleton";
 import Pagination from "../components/Pagination";
 import prisma from "@/prisma/client";
 import { columnNames } from "./IssuesList";
+import { Metadata } from "next";
 
 const IssuesPage = async ({ searchParams }: { searchParams: IssueQuery }) => {
   const statuses = Object.values(Status);
@@ -50,3 +51,10 @@ const IssuesPage = async ({ searchParams }: { searchParams: IssueQuery }) => {
 export const dynamic = "force-dynamic";
 
 export default IssuesPage;
+
+export const metadata: Metadata = {
+  title: "Issue Tracker - Issues List",
+  description: "View a sortable list of all project issues.",
+};
+//add open graph and twitter properties
+//add dynamic description based on search params
