@@ -23,7 +23,7 @@ const IssuesSummary = ({ open, inProgress, closed }: Props) => {
   return (
     <Flex gap="3">
       {containers.map((container) => (
-        <Card>
+        <Card key={container.status}>
           <Flex gap="2" direction="column">
             <Link
               className="text-sm font-medium"
