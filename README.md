@@ -42,5 +42,7 @@ Issue tracker! A next.js project meant to put the lessons learned from an earlie
 - Typescript
 - Tailwind
 - Prisma
+- MySQL
 - Next Auth
 - React Query
+- Vercel
