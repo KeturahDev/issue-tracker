@@ -4,7 +4,7 @@ By Keturah Smith, March 2024
 
 ## Descsription
 
-Issue tracker! A next.js project meant to put the lessons learned from an earlier Mosh tutorial into practice.
+Issue tracker! A next.js project meant to put the lessons learned from an earlier Mosh tutorial into practice. Implementing basics of a fullstack Next.js application.
 
 ## Behavior List
 
